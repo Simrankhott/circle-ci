@@ -10,8 +10,19 @@ jobs:
         name: hello-world
         command: echo "my first circle-ci job"
 
+  secondjob:
+    docker:
+    - image: cimg/base:stable
+    steps:
+    - run:
+      name: second-world
+      command: echo "my second circle-ci job"      
+
 workflows:
   myjob-workflow:
     jobs:
      - myjob
+     - secondjob
+
+
 
