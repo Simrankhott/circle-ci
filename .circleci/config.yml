@@ -1,4 +1,6 @@
 version: 2.1
+orbs:
+  docker: circleci/docker@1.7.0
 
 jobs:
   myjob:
@@ -9,19 +11,15 @@ jobs:
       - run:
           name: hello-world
           command: echo "my first circle-ci job"
-
   secondjob:
     docker:
+      # replace with your preferred image
       - image: cimg/base:stable
     steps:
-      - checkout
-      - setup_remote_docker:
-          version: 20.10.8
-      - run:
-          name: second-world
-          command: |
-            echo "my second circle-ci job"
-            docker build -t myimg:latest .
+      - docker/build:
+          dockerfile: Dockerfile 
+          image: myimage 
+          tag: latest 
 
 workflows:
   myjob-workflow:
