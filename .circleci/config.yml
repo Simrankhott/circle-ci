@@ -7,9 +7,16 @@ jobs:
     docker:
       - image: cimg/base:stable
     steps:
-      - setup_remote_docker
       - checkout
+      - run:
+          name: hello-world
+          command: echo "my first circle-ci job"
 
+  dockerbuild-push:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
       - run:
           name: Build and Push Docker Image
           command: |
@@ -29,3 +36,4 @@ workflows:
   myjob-workflow:
     jobs:
       - myjob
+      - dockerbuild-push
