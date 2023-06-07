@@ -36,7 +36,6 @@ jobs:
       - docker/push:
           image: demo-app
           registry: $DOCKERHUB_USERNAME
-          tag: v1
 
 workflows:
   myjob-workflow:
