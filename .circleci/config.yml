@@ -22,6 +22,11 @@ jobs:
           image: demo-app
           tag: v1
           registry: $DOCKERHUB_USERNAME
+          propagate-environment: true
+          propagate-registry-permissions: true
+          propagate-tags-permissions: true
+    environment:
+      DEMO_IMAGE: demo-app:v1
 
   docker-push:
     docker:
@@ -36,14 +41,17 @@ jobs:
           name: List Docker Images
           command: docker images
 
-      - docker/push:
-          image: demo-app
-          registry: $DOCKERHUB_USERNAME
-          tag: v1
+      - run:
+          name: Docker Push
+          command: docker push $DOCKERHUB_USERNAME/$DEMO_IMAGE
 
 workflows:
   myjob-workflow:
     jobs:
       - myjob
-      - dockerbuild
-      - docker-push
+      - dockerbuild:
+          requires:
+            - myjob
+      - docker-push:
+          requires:
+            - dockerbuild
