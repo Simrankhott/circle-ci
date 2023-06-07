@@ -12,7 +12,7 @@ jobs:
           name: hello-world
           command: echo "my first circle-ci job"
 
-    dockerbuild:
+  dockerbuild:
     docker:
       - image: cimg/base:stable
     steps:
