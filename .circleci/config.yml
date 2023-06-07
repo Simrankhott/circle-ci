@@ -34,8 +34,6 @@ jobs:
           name: List Docker Images
           command: docker images
 
-      - setup_remote_docker
-      - checkout
       - docker/push:
           image: demo-app
           registry: $DOCKERHUB_USERNAME
