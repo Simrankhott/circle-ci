@@ -1,16 +1,17 @@
 version: 2.1
 
 jobs:
-  hello-world:
-    docker:
-      - image: cimg/base:stable
+  myjob:
+    docker: 
+    - image: cimg/base:stable
     steps:
-      - checkout
-      - run:
-          name: "say hello world"
-          command: "echo hello,world"
+    - checkout
+    - run:
+    name: hello-world
+    command: echo "my first circle-ci job"
 
 workflows:
-  say-hello-workflow:
+  myjob-workflow:
     jobs:
-      - hello-world
+     - myjob
+
