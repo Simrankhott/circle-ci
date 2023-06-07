@@ -16,10 +16,11 @@ jobs:
       # replace with your preferred image
       - image: cimg/base:stable
     steps:
+      - checkout
       - docker/build:
-          dockerfile: Dockerfile 
-          image: myimage 
-          tag: latest 
+          dockerfile: Dockerfile
+          image: myimage
+          tag: latest
 
 workflows:
   myjob-workflow:
