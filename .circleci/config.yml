@@ -12,46 +12,26 @@ jobs:
           name: hello-world
           command: echo "my first circle-ci job"
 
-  dockerbuild:
+  dockerbuild-push:
     docker:
       - image: cimg/base:stable
     steps:
       - setup_remote_docker
       - checkout
-      - docker/build:
-          image: demo-app
-          tag: v1
-          registry: $DOCKERHUB_USERNAME
-          propagate-environment: true
-          propagate-registry-permissions: true
-          propagate-tags-permissions: true
-    environment:
-      DEMO_IMAGE: demo-app:v1
-
-  docker-push:
-    docker:
-      - image: cimg/base:stable
-        auth:
+      - docker/login:
           username: $DOCKERHUB_USERNAME
           password: $DOCKERHUB_PASSWORD
-    steps:
-      - setup_remote_docker
-      - checkout
-      - run: 
-          name: List Docker Images
-          command: docker images
 
       - run:
-          name: Docker Push
-          command: docker push $DOCKERHUB_USERNAME/$DEMO_IMAGE
+          name: Build and Push Docker Image
+          command: |
+            docker build -t $DOCKERHUB_USERNAME/demo-app:v1 .
+            docker push $DOCKERHUB_USERNAME/demo-app:v1
 
 workflows:
   myjob-workflow:
     jobs:
       - myjob
-      - dockerbuild:
+      - dockerbuild-push:
           requires:
             - myjob
-      - docker-push:
-          requires:
-            - dockerbuild
