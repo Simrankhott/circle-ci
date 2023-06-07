@@ -27,7 +27,7 @@ jobs:
     docker:
       - image: cimg/base:stable
         auth:
-          username: $DOCKERHUB_USERNAME
+          username: simrankhot
           password: $DOCKERHUB_PASSWORD
     steps:
       - setup_remote_docker
