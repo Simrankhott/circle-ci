@@ -11,16 +11,14 @@ jobs:
       - run:
           name: hello-world
           command: echo "my first circle-ci job"
+  jobs:
   secondjob:
     docker:
-      # replace with your preferred image
       - image: cimg/base:stable
     steps:
-      - checkout
       - docker/build:
-          dockerfile: Dockerfile
-          image: myimage
-          tag: latest
+          image: myimage 
+          tag: latest 
 
 workflows:
   myjob-workflow:
