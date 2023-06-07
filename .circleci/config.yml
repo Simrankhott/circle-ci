@@ -14,32 +14,19 @@ jobs:
 
   dockerbuild:
     docker:
-      - image: cimg/base:stable
+     - image: cimg/base:stable
     steps:
       - setup_remote_docker
       - checkout
       - docker/build:
-          image: myimage
-          tag: latest
+          image: demo-app 
+          tag: v1 
+          registry: $DOCKERHUB_USERNAME
 
-  pushjob:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      - setup_remote_docker
-      - checkout
-      - run:
-          name: Configure Docker credentials
-          command: |
-            echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
-      - docker/push:
-          image: demo-app
-          registry: simrankhot
-          tag: v1
 
 workflows:
   myjob-workflow:
     jobs:
       - myjob
       - dockerbuild
-      - pushjob
+ 
