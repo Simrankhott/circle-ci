@@ -3,15 +3,14 @@ version: 2.1
 jobs:
   hello-world:
     docker:
-      - image:  cimg/base:stable
+      - image: cimg/base:stable
     steps:
       - checkout
       - run:
-        name: "say hello world"
-        command: "echo hello,world"
+          name: "say hello world"
+          command: "echo hello,world"
 
 workflows:
   say-hello-workflow:
     jobs:
-      hello-world        
-
+      - hello-world
