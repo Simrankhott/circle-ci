@@ -21,7 +21,7 @@ jobs:
       - docker/build:
           context: .
           dockerfile: Dockerfile
-          tag: $DOCKERHUB_USERNAME/demo-app:v1
+          image: $DOCKERHUB_USERNAME/demo-app:v1
 
       - docker/push:
           image: $DOCKERHUB_USERNAME/demo-app:v1
