@@ -8,28 +8,23 @@ jobs:
       - image: cimg/base:stable
     steps:
       - checkout
+
       - run:
-          name: hello-world
-          command: echo "my first circle-ci job"
+          name: Build and Push Docker Image
+          command: |
+            # Build the Docker image
+            docker build -t demo-app .
 
-  dockerbuild-push:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      - setup_remote_docker
-      - checkout
-      - docker/build:
-          context: .
-          dockerfile: Dockerfile
-          image: $DOCKERHUB_USERNAME/demo-app:v1
+            # TAG docker image
+            docker tag demo-app $DOCKERHUB_USERNAME/demo-app:v1
 
-      - docker/push:
-          image: $DOCKERHUB_USERNAME/demo-app:v1
+            # Log in to Docker Hub
+            echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+
+            # Push the Docker image to Docker Hub
+            docker push $DOCKERHUB_USERNAME/demo-app:v1
 
 workflows:
   myjob-workflow:
     jobs:
       - myjob
-      - dockerbuild-push:
-          requires:
-            - myjob
