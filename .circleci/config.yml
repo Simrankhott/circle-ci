@@ -30,12 +30,16 @@ jobs:
   docker-push:
     docker:
       - image: cimg/base:stable
+        auth:
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_PASSWORD
     steps:
       - setup_remote_docker
       - checkout
       - docker/push:
           image: demo-app
           registry: $DOCKERHUB_USERNAME
+          tag: v1
 
 workflows:
   myjob-workflow:
