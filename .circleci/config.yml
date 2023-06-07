@@ -23,10 +23,6 @@ jobs:
           tag: v1
           registry: $DOCKERHUB_USERNAME
 
-      - run:
-          name: List Docker Images
-          command: docker images
-
   docker-push:
     docker:
       - image: cimg/base:stable
@@ -34,6 +30,11 @@ jobs:
           username: $DOCKERHUB_USERNAME
           password: $DOCKERHUB_PASSWORD
     steps:
+
+      - run: 
+          name: List docker images
+          command: docker images
+      
       - setup_remote_docker
       - checkout
       - docker/push:
