@@ -11,15 +11,16 @@ jobs:
       - run:
           name: hello-world
           command: echo "my first circle-ci job"
-  jobs:
+
   dockerbuild:
     docker:
       - image: cimg/base:stable
     steps:
       - setup_remote_docker
       - checkout
-          image: myimage 
-          tag: latest 
+      - docker/build:
+          image: myimage
+          tag: latest
 
 workflows:
   myjob-workflow:
