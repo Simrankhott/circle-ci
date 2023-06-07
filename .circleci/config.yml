@@ -26,9 +26,10 @@ jobs:
     steps:
       - setup_remote_docker
       - checkout
-      - docker/login:
-          username: $DOCKERHUB_USERNAME
-          password: $DOCKERHUB_PASSWORD
+      - run:
+          name: Configure Docker credentials
+          command: |
+            echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
       - docker/push:
           image: demo-app
           registry: simrankhot
