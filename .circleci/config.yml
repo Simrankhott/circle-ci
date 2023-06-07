@@ -22,6 +22,10 @@ jobs:
           image: demo-app 
           tag: v1 
           registry: $DOCKERHUB_USERNAME
+          
+      - run:
+          name: List Docker Images
+          command: docker images
 
 
 workflows:
