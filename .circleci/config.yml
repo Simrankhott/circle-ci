@@ -7,8 +7,8 @@ jobs:
     steps:
     - checkout
     - run:
-    name: hello-world
-    command: echo "my first circle-ci job"
+        name: hello-world
+        command: echo "my first circle-ci job"
 
 workflows:
   myjob-workflow:
