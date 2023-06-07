@@ -30,6 +30,7 @@ jobs:
           username: $DOCKERHUB_USERNAME
           password: $DOCKERHUB_PASSWORD
     steps:
+      - setup_remote_docker
       - run: 
           name: List Docker Images
           command: docker images
