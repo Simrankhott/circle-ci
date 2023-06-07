@@ -12,18 +12,31 @@ jobs:
           name: hello-world
           command: echo "my first circle-ci job"
 
-  dockerbuild:
+  secondjob:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - docker/build:
+          image: demo-app
+          tag: v1
+
+  pushjob:
     docker:
       - image: cimg/base:stable
     steps:
       - setup_remote_docker
       - checkout
-      - docker/build:
-          image: myimage
-          tag: latest
+      - docker/login:
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_PASSWORD
+      - docker/push:
+          image: demo-app
+          registry: simrankhot
+          tag: v1
 
 workflows:
   myjob-workflow:
     jobs:
       - myjob
-      - dockerbuild
+      - secondjob
+      - pushjob
