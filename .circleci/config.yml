@@ -30,11 +30,10 @@ jobs:
           username: $DOCKERHUB_USERNAME
           password: $DOCKERHUB_PASSWORD
     steps:
-
       - run: 
-          name: List docker images
+          name: List Docker Images
           command: docker images
-      
+
       - setup_remote_docker
       - checkout
       - docker/push:
@@ -48,4 +47,3 @@ workflows:
       - myjob
       - dockerbuild
       - docker-push
-
