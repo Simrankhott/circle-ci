@@ -1,6 +1,6 @@
 version: 2.1
 orbs:
-  docker: circleci/docker@1.7.0
+  docker: circleci/docker@2.2.0
 
 jobs:
   myjob:
@@ -14,23 +14,34 @@ jobs:
 
   dockerbuild:
     docker:
-     - image: cimg/base:stable
+      - image: cimg/base:stable
     steps:
       - setup_remote_docker
       - checkout
       - docker/build:
-          image: demo-app 
-          tag: v1 
+          image: demo-app
+          tag: v1
           registry: $DOCKERHUB_USERNAME
-          
+
       - run:
           name: List Docker Images
           command: docker images
 
+  docker-push:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - setup_remote_docker
+      - checkout
+      - docker/push:
+          image: demo-app
+          registry: $DOCKERHUB_USERNAME
+          tag: v1
 
 workflows:
   myjob-workflow:
     jobs:
       - myjob
       - dockerbuild
- 
+      - docker-push
+
